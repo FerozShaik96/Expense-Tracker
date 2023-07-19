@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { Footprints, Heart, TrendingUp, TrendingDown } from "lucide-react";
 import { Button, Form, Col, Container, Row } from "react-bootstrap";
 
@@ -85,10 +86,10 @@ function SignUpPage() {
           <Col className="  pt-5 d-flex  justify-content-center align-items-center">
             <Form
               onSubmit={submitHandler}
-              className="border bg-dark p-5  rounded-5 "
+              className="border  p-5 border shadow-lg p-3 mb-5 bg-light rounded-5 rounded-5 "
             >
               <Form.Group className="mb-3  " controlId="formBasicEmail">
-                <Form.Label className=" mb-3 ps-1 text-light fw-bold">
+                <Form.Label className=" mb-3 ps-1  fw-bold">
                   Email address
                 </Form.Label>
                 <Form.Control
@@ -99,9 +100,7 @@ function SignUpPage() {
               </Form.Group>
 
               <Form.Group className="mb-3   " controlId="formBasicPassword">
-                <Form.Label className="mb-3 ps-1 text-light fw-bold">
-                  Password
-                </Form.Label>
+                <Form.Label className="mb-3 ps-1  fw-bold">Password</Form.Label>
                 <Form.Control
                   ref={passwordRef}
                   type="password"
@@ -109,7 +108,7 @@ function SignUpPage() {
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicPassword1">
-                <Form.Label className="mb-3 ps-1 text-light fw-bold">
+                <Form.Label className="mb-3 ps-1  fw-bold">
                   Conform Password
                 </Form.Label>
                 <Form.Control
@@ -122,12 +121,12 @@ function SignUpPage() {
                 controlId="formBasicCheckbox"
               >
                 <Form.Check type="checkbox" className="ms-2" />
-                <Form.Label className=" mb-3  text-light fw-light ">
+                <Form.Label className=" mb-3   fw-light ">
                   Check me out
                 </Form.Label>
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Text className=" text-light fw-lighter ">
+                <Form.Text className="  fw-lighter ">
                   By Checking on box you will agree to our{" "}
                   <a href="1">Terms & Conditions </a>
                   And <a href="1">polices of the Company</a>
@@ -138,11 +137,11 @@ function SignUpPage() {
                   {isLoading ? "Sending Request..." : "Create Account"}
                 </Button>
               </div>
-              <p className=" ps-3 text-light fw-lighter mt-3">
+              <p className=" ps-3  fw-lighter mt-3">
                 Already User ..?
-                <a href="q" className="px-3 text-decoration-none" to="/signin">
+                <Link className="px-3 text-decoration-none" to="/login">
                   Click here To Login
-                </a>
+                </Link>
               </p>
             </Form>
           </Col>

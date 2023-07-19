@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Footprints, Heart, TrendingUp, TrendingDown } from "lucide-react";
 import { Button, Form, Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function SignInPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +32,8 @@ function SignInPage() {
       console.log(data);
       if (data.ok) {
         const res = await response.json();
-        console.log(res);
+        console.log(res.idToken);
+        localStorage.setItem("userid", res.idToken);
       } else {
         let errorMessage = "Auhtentication Failed";
         throw new Error(errorMessage);
@@ -46,7 +48,7 @@ function SignInPage() {
       <Container className="">
         <Row className="d-flex  align-items-center mt-5 justify-content-center">
           <Col>
-            <div className="w-100">
+            <div className="">
               <h1 className="fs-1 fw-bolder">
                 Kep
                 <TrendingUp
@@ -91,10 +93,10 @@ function SignInPage() {
           <Col className="  pt-5 d-flex  justify-content-center align-items-center">
             <Form
               onSubmit={submitHandler}
-              className="border bg-dark p-5  rounded-5 "
+              className="border shadow-lg p-3 mb-5 bg-light rounded-5  p-5  rounded-5 "
             >
               <Form.Group className="mb-3  " controlId="formBasicEmail">
-                <Form.Label className=" mb-3 ps-1 text-light fw-bold">
+                <Form.Label className=" mb-3 ps-1  fw-bold">
                   Email address
                 </Form.Label>
                 <Form.Control
@@ -105,9 +107,7 @@ function SignInPage() {
               </Form.Group>
 
               <Form.Group className="mb-3   " controlId="formBasicPassword">
-                <Form.Label className="mb-3 ps-1 text-light fw-bold">
-                  Password
-                </Form.Label>
+                <Form.Label className="mb-3 ps-1  fw-bold">Password</Form.Label>
                 <Form.Control
                   ref={passwordRef}
                   type="password"
@@ -119,12 +119,12 @@ function SignInPage() {
                 controlId="formBasicCheckbox"
               >
                 <Form.Check type="checkbox" className="ms-2" />
-                <Form.Label className=" mb-3  text-light fw-light ">
+                <Form.Label className=" mb-3   fw-light ">
                   Check me out
                 </Form.Label>
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Text className=" text-light fw-lighter ">
+                <Form.Text className="  fw-lighter ">
                   By Checking on box you will agree to our{" "}
                   <a href="1">Terms & Conditions </a>
                   And <a href="1">polices of the Company</a>
@@ -136,13 +136,13 @@ function SignInPage() {
                 </Button>
               </div>
               <div className="pt-2 ps-2 d-grid">
-                <a href="q">Forgot Password</a>
+                <Link>Forgot Password</Link>
               </div>
-              <p className=" ps-2 text-light fw-lighter mt-3">
+              <p className=" ps-2  fw-lighter mt-3">
                 New User ..?
-                <a href="q" className="ps-3 text-decoration-none" to="/signin">
+                <Link to="/signup" className="ps-3 text-decoration-none">
                   Click here To Create An Account
-                </a>
+                </Link>
               </p>
             </Form>
           </Col>
