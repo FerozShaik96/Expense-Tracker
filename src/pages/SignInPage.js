@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
 import { Footprints, Heart, TrendingUp, TrendingDown } from "lucide-react";
 import { Button, Form, Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignInPage() {
   const [isLoading, setIsLoading] = useState(false);
   const emailRef = useRef();
+  const navigate = useNavigate();
   const passwordRef = useRef();
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -34,6 +35,7 @@ function SignInPage() {
         const res = await response.json();
         console.log(res.idToken);
         localStorage.setItem("userid", res.idToken);
+        navigate("/profile");
       } else {
         let errorMessage = "Auhtentication Failed";
         throw new Error(errorMessage);

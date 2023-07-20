@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Form, Container, Button, Row, Col } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 function VerifyEmail() {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState("");
   const handleChange = (event) => {
     setUserData(event.target.value);
@@ -23,6 +25,7 @@ function VerifyEmail() {
     alert("Verification email has been send to your Mail");
     const verifyEmail = await verifyData.json();
     setUserData(verifyEmail.email);
+    navigate("/");
   };
   return (
     <div>

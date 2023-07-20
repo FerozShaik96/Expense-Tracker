@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Footprints, Heart, TrendingUp, TrendingDown } from "lucide-react";
 import { Button, Form, Col, Container, Row } from "react-bootstrap";
 
@@ -7,6 +7,7 @@ function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
+  const navigate = useNavigate();
   const submitHandler = async (event) => {
     event.preventDefault();
     const emailEntered = emailRef.current.value;
@@ -34,6 +35,7 @@ function SignUpPage() {
       alert(errorMessage);
     }
     setIsLoading(false);
+    navigate("/login");
     return response;
   };
   return (
