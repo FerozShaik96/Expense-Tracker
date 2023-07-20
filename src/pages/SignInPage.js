@@ -138,7 +138,7 @@ function SignInPage() {
                 </Button>
               </div>
               <div className="pt-2 ps-2 d-grid">
-                <Link>Forgot Password</Link>
+                <Link to="/forgotpassword">Forgot Password</Link>
               </div>
               <p className=" ps-2  fw-lighter mt-3">
                 New User ..?
