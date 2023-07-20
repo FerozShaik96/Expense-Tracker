@@ -1,6 +1,7 @@
 import React from "react";
-import { Col, Container } from "react-bootstrap";
+import { Button, Col, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   TrendingUp,
   TrendingDown,
@@ -11,8 +12,14 @@ import {
   UserCheck,
 } from "lucide-react";
 function Header() {
+  const navigate = useNavigate();
   let user = !!localStorage.getItem("userid");
-  let userIcon = !!localStorage.getItem("Data");
+  console.log(user);
+  let userIcon = localStorage.getItem("updateInfo");
+  const LogoutHandler = () => {
+    localStorage.clear();
+    navigate("login");
+  };
   return (
     <Container>
       <Col className="d-flex justify-content-between align-items-center pt-4 ">
@@ -61,15 +68,16 @@ function Header() {
                   <UserX />
                 </Link>
               )}
-              <Link
+              <Button
                 to="signup"
                 data-toggle="tooltip"
                 data-placement="top"
                 title="Log Out"
+                onClick={LogoutHandler}
                 className="border border-2 border-success ms-2 py-2 px-3 rounded-pill  text-dark fw-bold text-decoration-none"
               >
                 <LogOut />
-              </Link>
+              </Button>
             </div>
           ) : (
             <div>
