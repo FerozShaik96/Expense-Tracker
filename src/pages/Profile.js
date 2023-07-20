@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { Form, Row, Col, Container, Button } from "react-bootstrap";
-function Profile1() {
+import VerifyEmail from "../Utilities/VerifyEmail";
+function Profile() {
   const [isLoading, setIsLoading] = useState(false);
   const [submit, setSubmit] = useState(false);
   const nameRef = useRef();
@@ -29,7 +30,6 @@ function Profile1() {
     );
     const res = await data.json();
     document.querySelector("form").reset();
-    console.log(res);
     alert("Profile updated Please Refresh the page");
 
     localStorage.setItem(
@@ -58,9 +58,8 @@ function Profile1() {
     const response = await useData.json();
     setSubmit(response ? response : "");
   }
-  const add = !!submit;
-  console.log(add);
-  console.log(submit);
+  const updateInfo = !!submit;
+  localStorage.setItem("updateInfo", updateInfo);
   return (
     <Container>
       <figure className="text-center mt-5 me-3">
@@ -89,11 +88,11 @@ function Profile1() {
         </figcaption>
       </figure>
       {/* <div> */}
-      <Row className="d-flex align-items-center mt-5 justify-content-center">
+      <Row className="d-flex  mt-5 justify-content-center">
         {!!submit ? (
           <div>
             <img
-              src={submit.users[0].photoUrl}
+              src={submit ? submit.users[0].photoUrl : ""}
               style={{ width: "200px", height: "200px" }}
               className="  rounded-circle"
               alt="User.png"
@@ -124,9 +123,10 @@ function Profile1() {
                 Upload Your Image
               </Form.Label>
               <Form.Control
-                type="text"
+                type="url"
                 ref={imgRef}
                 placeholder="paste your URL"
+                defaultValue={submit ? submit.users[0].photoUrl : ""}
               />
             </Form.Group>
             <div className="pt-2 d-grid">
@@ -137,10 +137,12 @@ function Profile1() {
           </Form>
           {/* </div> */}
         </Col>
-        <Col></Col>
+        <Col>
+          <VerifyEmail />
+        </Col>
       </Row>
     </Container>
   );
 }
 
-export default Profile1;
+export default Profile;
