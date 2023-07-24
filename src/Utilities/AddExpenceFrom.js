@@ -1,23 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Container, Col, Row, Modal, Form, Button } from "react-bootstrap";
 function AddExpenceFrom(props) {
-  const [data, setData] = useState({
-    Amount: 0,
-    Description: "",
-    Category: "Food",
-  });
+  const localId = localStorage.getItem("LocalId");
+  const enterAmount = useRef();
+  const enterDescription = useRef();
+  const enterCategory = useRef();
   const [isLoading, setIsLoading] = useState(false);
-  const changeHandler = (event) => {
-    const { name, value } = event.target;
-    setData({ ...data, [name]: value });
-  };
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
-    document.querySelector("form").reset();
-    setIsLoading(false);
-    props.Expense({ data, isLoading });
+    const enteredData = {
+      Amount: enterAmount.current.value,
+      Description: enterDescription.current.value,
+      Category: enterCategory.current.value,
+    };
+    props.Expense({ enteredData, isLoading });
+    const Data = await fetch(
+      `https://expensetracker-5d404-default-rtdb.firebaseio.com/${localId}/expenses.json`,
+      {
+        method: "POST",
+        body: JSON.stringify(enteredData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (Data.ok) {
+      const res = await Data.json();
+      console.log(res);
+    }
   };
+
   return (
     <Container>
       <Row>
@@ -47,9 +59,9 @@ function AddExpenceFrom(props) {
                   </Form.Label>
                   <Form.Control
                     type="number"
-                    onChange={changeHandler}
                     name="Amount"
                     placeholder="Enter Amount"
+                    ref={enterAmount}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3  " controlId="formBasicEmail">
@@ -59,8 +71,8 @@ function AddExpenceFrom(props) {
                   <Form.Control
                     type="text"
                     name="Description"
-                    onChange={changeHandler}
                     placeholder="Add a description"
+                    ref={enterDescription}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3  " controlId="formBasicEmail">
@@ -69,8 +81,8 @@ function AddExpenceFrom(props) {
                   </Form.Label>
                   <Form.Select
                     aria-label="Default select example"
-                    onChange={changeHandler}
                     name="Category"
+                    ref={enterCategory}
                   >
                     <option>Open this select menu</option>
                     <option value="Petrol">Petrol</option>
@@ -82,7 +94,7 @@ function AddExpenceFrom(props) {
                 </Form.Group>
                 <div className="text-end mt-4">
                   <Button variant="primary" type="submit">
-                    Add Expense
+                    {isLoading ? "Submiting" : "Add Expense"}
                   </Button>
                 </div>
               </Form>
