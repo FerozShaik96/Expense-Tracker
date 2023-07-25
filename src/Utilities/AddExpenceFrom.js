@@ -27,6 +27,7 @@ function AddExpenceFrom(props) {
     if (Data.ok) {
       const res = await Data.json();
       console.log(res);
+      props.onClose();
     }
   };
 

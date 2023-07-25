@@ -7,6 +7,7 @@ function Home() {
   const localId = localStorage.getItem("LocalId");
   const [getForm, setGetForm] = useState(false);
   const [expense, setExpense] = useState([]);
+  // const [deleteId,setDeleteId]=use
   const [editExpense, setEditExpense] = useState([]);
   const [editButton, setEditButton] = useState(false);
   const toggleForm = () => {
@@ -46,6 +47,19 @@ function Home() {
     });
     setGetForm(false);
   };
+  const deleteHandler = async (id) => {
+    const deleteData = await fetch(
+      `https://expensetracker-5d404-default-rtdb.firebaseio.com/${localId}/expenses/${id}.json`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(deleteData);
+    setExpense((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
   console.log(expense);
   return (
     <Container
@@ -61,7 +75,10 @@ function Home() {
         <EditExpense
           editExpence={editExpense}
           editButtonClick={editButton}
-          onClose={() => setEditButton(false)}
+          onClose={() => {
+            fetchData();
+            setEditButton(false);
+          }}
         />
       ) : (
         ""
@@ -73,7 +90,10 @@ function Home() {
         <AddExpenceFrom
           Expense={ExpenseData}
           show={getForm}
-          onClose={() => setGetForm(false)}
+          onClose={() => {
+            fetchData();
+            setGetForm(false);
+          }}
         />
         <Col className="d-flex px-4 mt-5 justify-content-center">
           <Table striped bordered hover>
@@ -109,7 +129,15 @@ function Home() {
                       </td>
                       <td>
                         <div className="text-center">
-                          <Button className="px-4">Delete</Button>
+                          <Button
+                            className="px-4"
+                            onClick={(event) => {
+                              event.preventDefault();
+                              deleteHandler(expense[index].id);
+                            }}
+                          >
+                            Delete
+                          </Button>
                         </div>
                       </td>
                     </tr>
