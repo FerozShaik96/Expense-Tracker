@@ -45,7 +45,7 @@ function Home() {
   }
   useEffect(() => {
     fetchData();
-  });
+  }, []);
   const ExpenseData = (item) => {
     console.log(item);
     setExpense((prev) => {
