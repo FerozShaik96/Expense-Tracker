@@ -1,13 +1,17 @@
 import React, { useRef, useState } from "react";
 import { Footprints, Heart, TrendingUp, TrendingDown } from "lucide-react";
 import { Button, Form, Col, Container, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { AuthActions } from "../Store/AuthReducer";
 import { Link, useNavigate } from "react-router-dom";
 
 function SignInPage() {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const emailRef = useRef();
   const navigate = useNavigate();
   const passwordRef = useRef();
+
   const submitHandler = async (event) => {
     event.preventDefault();
     const emailEntered = emailRef.current.value;
@@ -33,7 +37,12 @@ function SignInPage() {
       console.log(data);
       if (data.ok) {
         const res = await response.json();
+        console.log(res);
         console.log(res.idToken);
+        dispatch(AuthActions.IsLoggedIn());
+        dispatch(AuthActions.UserIdToken(res.idToken));
+        dispatch(AuthActions.AddUserId(res.localId));
+        localStorage.setItem("LocalId", res.localId);
         localStorage.setItem("userid", res.idToken);
         navigate("/profile");
       } else {

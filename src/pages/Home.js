@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Expense_tracker from "../Utilities/Expense_tracker.jpeg";
+import { useDispatch } from "react-redux";
 import { Form, Button, Row, Container, Col, Table } from "react-bootstrap";
 import AddExpenceFrom from "../Utilities/AddExpenceFrom";
 import EditExpense from "./EditExpense";
+import { Expenseaction } from "../Store/ExpensesReducer";
 function Home() {
+  const dispatch = useDispatch();
   const localId = localStorage.getItem("LocalId");
   const [getForm, setGetForm] = useState(false);
   const [expense, setExpense] = useState([]);
@@ -33,13 +36,14 @@ function Home() {
         });
       }
       setExpense(loadedUserdata);
+      dispatch(Expenseaction.AddExpenses(loadedUserdata));
     } else {
       throw new Error("Something Went Wrong Please Try again later");
     }
   }
   useEffect(() => {
     fetchData();
-  }, []);
+  });
   const ExpenseData = (item) => {
     console.log(item);
     setExpense((prev) => {
