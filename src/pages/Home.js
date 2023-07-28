@@ -4,13 +4,15 @@ import { useDispatch } from "react-redux";
 import { Form, Button, Row, Container, Col, Table } from "react-bootstrap";
 import AddExpenceFrom from "../Utilities/AddExpenceFrom";
 import EditExpense from "./EditExpense";
+import { useSelector } from "react-redux";
 import { Expenseaction } from "../Store/ExpensesReducer";
+import { CSVLink } from "react-csv";
 function Home() {
+  const isDark = useSelector((state) => state.Theme.isDarkmode);
   const dispatch = useDispatch();
   const localId = localStorage.getItem("LocalId");
   const [getForm, setGetForm] = useState(false);
   const [expense, setExpense] = useState([]);
-  // const [deleteId,setDeleteId]=use
   const [editExpense, setEditExpense] = useState([]);
   const [editButton, setEditButton] = useState(false);
   const toggleForm = () => {
@@ -67,7 +69,7 @@ function Home() {
   console.log(expense);
   return (
     <Container
-      className="logo  w-100 vh-100  mt-5"
+      className={`${isDark ? "bg-dark" : ""}logo  w-100 vh-100  mt-5`}
       style={{
         backgroundImage: ` url(${Expense_tracker})`,
         backgroundRepeat: "no-repeat",
@@ -88,9 +90,20 @@ function Home() {
         ""
       )}
       <Row className="d-flex justify-content-center">
-        <Form onSubmit={SubmitHandler} className="text-center mt-5">
-          <Button type="submit">Add Expenses</Button>
-        </Form>
+        <div className="d-flex justify-content-center gap-5">
+          <Form onSubmit={SubmitHandler} className=" mt-5">
+            <Button type="submit">Add Expenses</Button>
+          </Form>
+          <Button className=" mt-5">
+            <CSVLink
+              className="text-white text-decoration-none"
+              data={Object.values(expense)}
+              filename="data.csv"
+            >
+              Download Expenses
+            </CSVLink>
+          </Button>
+        </div>
         <AddExpenceFrom
           Expense={ExpenseData}
           show={getForm}

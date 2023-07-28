@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { TrendingDown, TrendingUp } from "lucide-react";
+import { useSelector } from "react-redux";
 import { Form, Row, Col, Container, Button } from "react-bootstrap";
 import VerifyEmail from "../Utilities/VerifyEmail";
 function Profile() {
+  const isDark = useSelector((state) => state.Theme.isDarkmode);
+
   const [isLoading, setIsLoading] = useState(false);
   const [submit, setSubmit] = useState(false);
   const nameRef = useRef();
@@ -61,14 +64,16 @@ function Profile() {
   const updateInfo = !!submit;
   localStorage.setItem("updateInfo", updateInfo);
   return (
-    <Container>
-      <figure className="text-center mt-5 me-3">
-        <blockquote className="blockquote">
+    <Container className={`${isDark ? "bg-black rounded-3" : ""}`}>
+      <figure className="text-center mt-5 me-3  pt-3">
+        <blockquote className={`${isDark ? "text-white" : ""} blockquote`}>
           <p className="pb-1">
             Can you provide an updated summary of yourself...?
           </p>
         </blockquote>
-        <figcaption className="blockquote-footer">
+        <figcaption
+          className={`${isDark ? "text-primary" : ""} blockquote-footer`}
+        >
           <cite title="Source Title">
             Kep
             <TrendingUp
@@ -97,7 +102,9 @@ function Profile() {
               className="  rounded-circle"
               alt="User.png"
             />
-            <h1 className="mb-5">{submit.users[0].displayName}</h1>
+            <h1 className={`${isDark ? "text-white" : ""} mb-5`}>
+              {submit.users[0].displayName}
+            </h1>
           </div>
         ) : (
           ""

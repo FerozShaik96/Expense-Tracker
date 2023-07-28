@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App";
 import Store from "./Store/Store";
 import { Provider } from "react-redux";
-
+import { useSelector } from "react-redux";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <div className="index pb-5">

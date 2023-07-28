@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialValues = { Expenses: [] };
+const initialValues = { Expenses: [], isActivePrime: false };
 const ExpenseSlice = createSlice({
   name: "Expenses",
   initialState: initialValues,
@@ -12,6 +12,14 @@ const ExpenseSlice = createSlice({
     },
     deleteExpenses(state, action) {
       state.Expenses = [...state.Expenses, action.payload];
+    },
+    IsPrime(state, action) {
+      if (action.payload > 10000) {
+        state.isActivePrime = true;
+      }
+    },
+    cancelPrime(state) {
+      state.isActivePrime = false;
     },
   },
 });

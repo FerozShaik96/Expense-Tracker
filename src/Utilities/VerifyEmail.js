@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 function VerifyEmail() {
+  const isDark = useSelector((state) => state.Theme.isDarkmode);
   const navigate = useNavigate();
   const [userData, setUserData] = useState("");
   const handleChange = (event) => {
@@ -31,7 +33,9 @@ function VerifyEmail() {
     <div>
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3  " controlId="formBasicEmail">
-          <Form.Label className=" mb-3 ps-1  fw-bold">
+          <Form.Label
+            className={`${isDark ? "text-white" : ""} mb-3 ps-1  fw-bold`}
+          >
             Verify Your Email{" "}
           </Form.Label>
           <Form.Control
